@@ -2,6 +2,8 @@ package com.example.fulexweb.handler;
 
 import com.example.fulexweb.dao.CityRepository;
 import com.example.fulexweb.domain.City;
+import io.micrometer.core.annotation.Timed;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -46,9 +48,10 @@ public class CityHandler {
     return Mono.create(cityMonoSink -> cityMonoSink.success(cityRepository.deleteCity(id)));
   }
 
-
+  @Timed
+  @Cacheable(cacheNames="locationSearch", key="'locationByCode'")
   public Mono<ServerResponse> helloCity(ServerRequest request) {
-
+    System.out.println("goo 000 ...");
     return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
         .body(BodyInserters.fromObject("Hello, City!".concat(request.queryParam("name").orElse(request.pathVariable("id")))));
   }

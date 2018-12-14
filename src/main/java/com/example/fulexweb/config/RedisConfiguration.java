@@ -47,7 +47,7 @@ import org.springframework.web.reactive.DispatcherHandler;
  *
  * @author xiaoyu
  */
-@Configuration
+//@Configuration
 @ConditionalOnClass({ RedisTemplate.class, DispatcherHandler.class })
 @SuppressWarnings("unchecked")
 public class RedisConfiguration {
